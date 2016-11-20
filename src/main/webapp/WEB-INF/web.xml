@@ -7,10 +7,6 @@
 
     <display-name>RESTful Web Service Example</display-name>
 
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-
     <servlet>
         <servlet-name>restws</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

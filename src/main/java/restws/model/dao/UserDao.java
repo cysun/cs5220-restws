@@ -12,4 +12,6 @@ public interface UserDao {
 
     User saveUser( User user );
 
+    void deleteUser( Integer id );
+
 }
