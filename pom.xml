@@ -5,8 +5,8 @@
   <artifactId>restws</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>RESFful Web Service Example</name>
-  <url>http://cs.calstatela.edu/cysun/cs520/restws</url>
+  <name>RESTful Web Service and AJAX Examples</name>
+  <url>http://cs.calstatela.edu/cysun/cs5220/restws</url>
   <build>
     <finalName>restws</finalName>
     <plugins>
