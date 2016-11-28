@@ -9,6 +9,8 @@
 </ul>
 <h3>AJAX</h3>
 <ul>
+  <li><a href="pages/number1.html">Random Number (Using Plain XMLHttpRequest)</a></li>
+  <li><a href="pages/number2.html">Random Number (Using jQuery)</a></li>
   <li><a href="users">Users</a></li>
 </ul>
 </body>

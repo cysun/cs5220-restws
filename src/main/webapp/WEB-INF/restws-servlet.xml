@@ -19,6 +19,8 @@
 
     <mvc:view-controller path="/" view-name="index" />
 
+    <mvc:resources mapping="/pages/**" location="/pages/" />
+
     <context:component-scan base-package="restws.web" />
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
