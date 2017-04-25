@@ -14,10 +14,11 @@ function viewUser(){
         url: "service/user/" + userId,
         dataType: "json",
         success: function(data) {
-            $("#user-display td[data-field='id']").html(data.id);
-            $("#user-display td[data-field='firstname']").html(data.firstName);
-            $("#user-display td[data-field='lastname']").html(data.lastName);
-            $("#user-display td[data-field='email']").html(data.email);
+            $("#user-display td:eq(0)").html(data.id);
+            $("#user-display td:eq(1)").html(data.firstName);
+            $("#user-display td:eq(2)").html(data.lastName);
+            $("#user-display td:eq(3)").html(data.email);
+            $("#user-display td:eq(4)").html(data.enabled);
         }
     });
     $("#user-display").dialog("open");
@@ -46,20 +47,25 @@ function addUser() {
             email: $("input[name='email']").val()
         }),
         success: function(data){
-            var newRow = $("<tr data-user-id='" + data.id + "'>" +
-                "<td data-field='id'>" + data.id + "</td>" +
-                "<td data-field='firstname'>" + data.firstName + "</td>" +
-                "<td data-field='lastname'>" + data.lastName + "</td>" +
-                "<td data-field='email'>" + data.email + "</td>" +
-                "<td><a class='view' href='javascript:void(0)'>View</a> | " +
-                "<a class='edit' href='javascript:void(0)'>Edit</a> | " +
-                "<a class='delete' href='javascript:void(0)'>Delete</a></td>"
-            )
-            $("#users").append(newRow);
-            newRow.find(".view").click(viewUser);
-            newRow.find(".delete").click(deleteUser);
+            var row = $("<tr data-user-id='" + data.id + "'></tr>");
+            row.append("<td>" + data.id + "</td>")
+               .append("<td>" + data.firstName + "</td>")
+               .append("<td>" + data.lastName + "</td>");
+            var viewBtn = $("<button class='view'>View</button>").click(viewUser);
+            var editBtn = $("<button class='edit'>Edit</button>").click(editUser);
+            var deleteBtn = $("<button class='delete'>Delete</button>").click(deleteUser);
+            var cell = $("<td></td>");
+            cell.append(viewBtn).append(" ")
+                .append(editBtn).append(" ")
+                .append(deleteBtn);
+            $("#users").append( row.append(cell) );
         }
     });
+}
+function editUser()
+{
+    var userId = $(this).closest("tr").attr("data-user-id");
+    window.location.href = "editUser?id=" + userId;
 }
 $(function(){
 	$("#user-display").dialog({
@@ -69,12 +75,13 @@ $(function(){
 		autoOpen: false,
 	    buttons: {
 	        "Save": function(){
-	            if( ! $("input[name='id']").val() ) addUser();
-	            $(this).dialog( "close" );
+                $(this).dialog( "close" );
+	            addUser();
 	        }
 	    }
 	});
 	$(".view").click(viewUser);
+    $(".edit").click(editUser);
 	$(".delete").click(deleteUser);
 	$("#add").click(function(){
 		$("form")[0].reset();
@@ -85,19 +92,17 @@ $(function(){
 </head>
 <body>
 <h2>Users</h2>
-<p>(Edit User is not implemented)</p>
 <table id="users" border="1">
-  <tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Operations</th></tr>
+  <tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Operations</th></tr>
   <c:forEach items="${users}" var="user">
   <tr data-user-id="${user.id}">
-    <td data-field="id">${user.id}</td>
-    <td data-field="firstname">${user.firstName}</td>
-    <td data-field="lastname">${user.lastName}</td>
-    <td data-field="email">${user.email}</td>
+    <td>${user.id}</td>
+    <td>${user.firstName}</td>
+    <td>${user.lastName}</td>
     <td>
-      <a class="view" href="javascript:void(0)">View</a> |
-      <a class="edit" href="javascript:void(0)">Edit</a> |
-      <a class="delete" href="javascript:void(0)">Delete</a>
+      <button class="view">View</button>
+      <button class="edit">Edit</button>
+      <button class="delete">Delete</button>
     </td>
   </tr>
   </c:forEach>
@@ -106,10 +111,11 @@ $(function(){
 
 <div id="user-display">
 <table>
-  <tr><th>ID</th><td data-field="id"></td></tr>
-  <tr><th>First Name</th><td data-field="firstname"></td></tr>
-  <tr><th>Last Name</th><td data-field="lastname"></td></tr>
-  <tr><th>Email</th><td data-field="email"></td></tr>
+  <tr><th>ID</th><td></td></tr>
+  <tr><th>First Name</th><td></td></tr>
+  <tr><th>Last Name</th><td></td></tr>
+  <tr><th>Email</th><td></td></tr>
+  <tr><th>Enabled</th><td></td></tr>
 </table>
 </div>
 
@@ -120,7 +126,6 @@ $(function(){
   <tr><th>Last Name</th><td><input name="lastname" type="text" /></td></tr>
   <tr><th>Email</th><td><input name="email" type="text" /></td></tr>
 </table>
-<input name="id" type="hidden" />
 </form>
 </div>
 

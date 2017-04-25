@@ -6,7 +6,8 @@ create table users (
     id          integer primary key,
     first_name  varchar(255),
     last_name   varchar(255),
-    email       varchar(255)
+    email       varchar(255),
+    enabled     boolean not null default 't'
 );
 
 insert into users values (1, 'John', 'Doe', 'jdoe1@localhost');
