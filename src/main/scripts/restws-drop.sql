@@ -1,3 +1,2 @@
 drop table users;
-
-drop sequence hibernate_sequence;
+drop table hibernate_sequence;

@@ -45,7 +45,7 @@ $(function(){
 </tr>
 <tr>
   <td>Email</td>
-  <td><input type="text" name="email" value="${user.email}""/></td>
+  <td><input type="text" name="email" value="${user.email}" /></td>
 </tr>
 <tr>
   <td>Enabled</td>
